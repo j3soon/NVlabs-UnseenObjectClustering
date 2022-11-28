@@ -38,11 +38,35 @@ If you find Unseen Object Clustering useful in your research, please consider ci
    pip install -r requirement.txt
    ```
 
+The installation commands should look like below (on Ubuntu 18.04 with CUDA 11.7):
+
+```sh
+virtualenv venv -p python3.6
+source venv/bin/activate
+# Ref: https://github.com/strawlab/python-pcl#installation
+sudo apt-get update -y
+sudo apt-get install libpcl-dev -y
+# Ref: https://github.com/strawlab/python-pcl#common-setting
+pip install cython==0.25.2
+pip install numpy
+# UCN (this repo)
+pip install -r requirement.txt
+pip install torch
+pip install torchvision
+# Ref: https://github.com/NVlabs/UnseenObjectClustering/issues/5
+pip install pyyaml==5.4.1
+```
+
 
 ### Download
 
 - Download our trained checkpoints from [here](https://drive.google.com/file/d/1O-ymMGD_qDEtYxRU19zSv17Lgg6fSinQ/view?usp=sharing), save to $ROOT/data.
 
+More specifically, the location should be at: `$REPO_ROOT/data/checkpoints.zip`, and unzip it with:
+
+```sh
+cd data && unzip checkpoints.zip
+```
 
 ### Running the demo
 
@@ -52,6 +76,8 @@ If you find Unseen Object Clustering useful in your research, please consider ci
     ```Shell
     ./experiments/scripts/demo_rgbd_add.sh
     ```
+
+The results will be shown in a popup window as below:
 
 <p align="center"><img src="./data/pics/demo_rgbd_add.png" width="640" height="360"/></p>
 
