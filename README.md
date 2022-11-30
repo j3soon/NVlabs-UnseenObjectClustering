@@ -129,6 +129,52 @@ The results will be shown in a popup window as below:
 
 - Python2 is needed for ROS.
 
+- For Python3, run these extra lines:
+
+  We assume you have set up the virtual environment correctly (steps described above).
+
+  ```sh
+  sudo apt update
+  sudo apt install python3-catkin-pkg-modules python3-rospkg-modules python3-empy python-catkin-tools
+
+  # cd to the repo directory
+  mkdir -p ./catkin_ws/src; cd ./catkin_ws
+  catkin_make
+  source devel/setup.bash
+
+  source ../venv/bin/activate
+
+  wstool init
+  wstool set -y src/geometry2 --git https://github.com/ros/geometry2 -v 0.6.5
+  wstool up
+
+  git clone -b melodic https://github.com/ros-perception/vision_opencv.git src/vision_opencv
+
+  rosdep install --from-paths src --ignore-src -y -r
+
+  catkin_make --cmake-args \
+              -DCMAKE_BUILD_TYPE=Release \
+              -DPYTHON_EXECUTABLE=/usr/bin/python3.6 \
+              -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m \
+              -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
+
+  catkin config \
+    -DPYTHON_EXECUTABLE=../venv/bin/python \
+    -DPYTHON_INCLUDE_DIR=/usr/include/python3.6m \
+    -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
+
+  catkin config --install
+  ```
+
+  Test with:
+
+  ```
+  python -c "import tf"
+  python -c "import cv_bridge"
+  ```
+
+  Reference: https://j3soon.com/cheatsheets/robot-operating-system
+
 - Make sure our pretrained checkpoints are downloaded.
 
     ```Shell
